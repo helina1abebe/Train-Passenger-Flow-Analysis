@@ -36,3 +36,14 @@ def plot_dwell_time_extremes(df_pivot, top_n=10):
     plt.title(f'Shortest Dwell Times (Bottom {top_n})')
     plt.tight_layout()
     plt.show()
+
+
+def plot_dwell_time_distribution(df_sorted):
+    
+    plt.figure(figsize=(14, 8))
+    plt.barh(df_sorted["Stations"], df_sorted["Avg_Gap"], xerr=df_sorted["Gap_Std"], capsize=4)
+    plt.xlabel("Average Gap (minutes)")
+    plt.title("Station Gap Analysis: Avg_Gap with Std Deviation")
+    plt.grid(True, axis='x', linestyle='--', alpha=0.5)
+    plt.tight_layout()
+    plt.show()

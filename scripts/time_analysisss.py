@@ -55,22 +55,7 @@ def calculate_dwell_time(df):
      df['Dwell Time'] = df['Departure'] - df['Arrival']
      return df
 
-def calculate_dwell_time(df):
-    df = df.copy()
-    # Fill missing Arrival and Departure with station averages + overall fallback
-    for col in ['Arrival', 'Departure']:
-        station_avg = df.groupby('station_id')[col].transform('mean')
-        overall_avg = df[col].mean(skipna=True)
-        df[col] = df[col].fillna(station_avg).fillna(overall_avg)
 
-    # Fix swapped times where Departure < Arrival
-    neg_mask = df['Departure'] < df['Arrival']
-    df.loc[neg_mask, ['Arrival', 'Departure']] = df.loc[neg_mask, ['Departure', 'Arrival']].values
-    
-    # Calculate dwell time (Departure - Arrival)
-    df['Dwell Time'] = df['Departure'] - df['Arrival']
-    
-    return df
 
 # In train_schedule_utils.py
 def compute_station_gap_stats(df):
@@ -90,7 +75,7 @@ def compute_station_gap_stats(df):
 
     station_stats = station_stats.sort_values('Avg_Gap')
     print("Computed station gap stats:")
-    print(station_stats.head())
+    print(station_stats.head(59))
 
     return station_stats
 
